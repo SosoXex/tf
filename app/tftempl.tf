@@ -121,7 +121,7 @@ resource "aws_instance" "web"{
       "mkdir -p s3",
       "chmod 0777 ./s3",
       "s3fs hw14s3war-s3-war ~/s3",
-      "sudo cp /home/ubuntu/s3/wwp-1.0.0.war /var/lib/tomcat9/webapps/",
+      "cp /home/ubuntu/s3/wwp-1.0.0.war . && sudo cp wwp-1.0.0.war /var/lib/tomcat9/webapps/",
     ]
   }
 }
