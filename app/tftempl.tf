@@ -45,7 +45,7 @@ resource "aws_instance" "build"{
        ami = var.ami
        instance_type = var.itype
        user_data = <<EOF
-#!/bin/bash
+#!/bin/bash -xe
 sudo apt update
 sudo apt upgrade -y
 sudo apt install -y git default-jdk maven aws-cli
