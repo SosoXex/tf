@@ -33,33 +33,33 @@ variable "ivpc"{
 default = "sg-0e2711cc241cc7671"
 }
 
-resource "aws_s3_bucket" "STORAGE" {
+resource "aws_s3_bucket" "storage" {
   bucket = "s3_storage"
   tags = {
-    Name        = "S3 storage"
+    Name        = "s3 storage"
   }
 }
 
-resource "aws_instance" "BUILD"{
+resource "aws_instance" "build"{
        count = var.cnt
        key_name = var.kp
        ami = var.ami
        instance_type = var.itype
        tags = {
-         Name = "BUILD"
+         Name = "build"
        }
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
 }
 
-resource "aws_instance" "WEB"{
+resource "aws_instance" "web"{
        count = var.cnt
        key_name = var.kp
        ami = var.ami
        instance_type = var.itype
        tags = {
-         Name = "WEB"
+         Name = "web"
        }
        security_groups = [var.ivpc]
        subnet_id = var.snet
