@@ -50,6 +50,7 @@ resource "aws_instance" "build"{
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
+       user_data = "${file("builder.sh")}"
 }
 
 resource "aws_instance" "web"{
@@ -62,6 +63,7 @@ resource "aws_instance" "web"{
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
+       user_data = "${file("web.sh")}"
 }
 
 output "ip_builder"{
