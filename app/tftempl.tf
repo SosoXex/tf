@@ -33,7 +33,7 @@ variable "ivpc"{
 default = "sg-0e2711cc241cc7671"
 }
 
-resource "aws_s3_bucket" "storage" {
+resource "aws_s3_bucket" "storage-for-war-attribute" {
   bucket = "s3-storage"
   tags = {
     Name        = "s3-storage"
