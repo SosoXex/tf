@@ -44,7 +44,7 @@ resource "aws_instance" "BUILD"{
        count = var.cnt
        key_name = var.kp
        ami = var.ami
-       instance_type = element(var.itype, count.index)
+       instance_type = var.itype
        tags = {
          Name = "BUILD"
        }
@@ -57,7 +57,7 @@ resource "aws_instance" "WEB"{
        count = var.cnt
        key_name = var.kp
        ami = var.ami
-       instance_type = element(var.itype, count.index)
+       instance_type = var.itype
        tags = {
          Name = "WEB"
        }
