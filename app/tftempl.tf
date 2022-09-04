@@ -47,6 +47,7 @@ resource "aws_instance" "build"{
        user_data = <<EOF
 #!/bin/bash
 sudo apt update
+sudo apt upgrade -y
 sudo apt install -y git default-jdk maven aws-cli
 git clone https://github.com/koddas/war-web-project.git
 mvn -f ./war-web-project package
@@ -68,12 +69,15 @@ resource "aws_instance" "web"{
          Name = "web"
        }
        security_groups = [var.ivpc]
-       user_data = <<EOF
-#!/bin/bash
-touch 1.txt
-sudo apt update >> 1.txt
-sudo apt install -y default-jdk aws-cli tomcat9 >> 1.txt
-aws s3 ls >> 1.txt
+  user_data                   = <<EOF
+#!/bin/bash -xe
+sudo apt update
+sudo apt upgrade -y
+sudo hostnamectl set-hostname ubuntusrv.citizix.com
+sudo apt install -y nginx vim
+sudo cat > /var/www/html/hello.html <<EOD
+Hello world!
+EOD
 EOF
        subnet_id = var.snet
        associate_public_ip_address = true
