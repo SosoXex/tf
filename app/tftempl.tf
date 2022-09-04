@@ -64,6 +64,20 @@ resource "aws_instance" "build"{
        tags = {
          Name = "build"
        }
+       connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = tls_private_key.newkey.private_key_pem
+    host     = self.private_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update && sudo apt install -y git default-jdk aws-cli maven",
+      "git clone https://github.com/koddas/war-web-project.git",
+      "mvn -f ./war-web-project package",
+    ]
+  }
 }
 
 resource "aws_instance" "web"{
@@ -76,6 +90,20 @@ resource "aws_instance" "web"{
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
+
+       connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = tls_private_key.newkey.private_key_pem
+    host     = self.private_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install -y aws-cli tomcat9",
+    ]
+  }
 }
 
 output "ip_builder"{
