@@ -16,8 +16,7 @@ variable "snet"{
   default = "subnet-081298183b5a18fe4"
 }
 variable "ami" {
-  type = list(string)
-  default = ["ami-0c9354388bb36c088"]
+  default = "ami-0c9354388bb36c088"
 }
 variable "itype" {
   type = list(string)
@@ -39,8 +38,8 @@ default = "sg-0e2711cc241cc7671"
 resource "aws_instance" "test"{
        count = var.cnt
        key_name = var.kp
-       ami = element(var.ami)
-       instance_type = element(var.itype)
+       ami = var.ami
+       instance_type = element(var.itype, count.index)
        tags = {
          Name = "${var.rtags}-${count.index+1}"
        }
