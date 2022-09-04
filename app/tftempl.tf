@@ -46,11 +46,11 @@ resource "aws_instance" "build"{
        instance_type = var.itype
        user_data = <<EOF
 #!/bin/bash
-echo "Installing NodeExporter"
-mkdir /home/ubuntu/node_exporter
-cd /home/ubuntu/node_exporter
-echo "Changing Hostname"
-touch 1
+apt update
+apt install -y git default-jdk maven aws-cli
+git clone https://github.com/koddas/war-web-project.git
+mvn -f ./war-web-project package
+aws s3 ls >> 1.txt
 EOF
        security_groups = [var.ivpc]
        subnet_id = var.snet
@@ -70,11 +70,9 @@ resource "aws_instance" "web"{
        security_groups = [var.ivpc]
        user_data = <<EOF
 #!/bin/bash
-echo "Installing NodeExporter"
-mkdir /home/ubuntu/node_exporter
-cd /home/ubuntu/node_exporter
-echo "Changing Hostname"
-touch 1
+apt update
+apt install -y default-jdk aws-cli tomcat9
+aws s3 ls >> 1.txt
 EOF
        subnet_id = var.snet
        associate_public_ip_address = true
