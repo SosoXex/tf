@@ -84,7 +84,7 @@ resource "aws_instance" "build"{
       "mvn -f ./war-web-project package",
       "chmod 600 .passwd-s3fs",
       "mkdir -p s3",
-      "s3fs hw14s3war-s3-war ~/s3"
+      "s3fs hw14s3war-s3-war ~/s3",
       "sudo cp war-web-project/target/wwp-1.0.0.war ./s3/",
     ]
   }
@@ -119,7 +119,7 @@ resource "aws_instance" "web"{
       "sudo apt update && sudo apt install -y tomcat9 awscli s3fs",
       "chmod 600 .passwd-s3fs",
       "mkdir -p s3",
-      "s3fs hw14s3war-s3-war ~/s3"
+      "s3fs hw14s3war-s3-war ~/s3",
       "sudo cp s3/wwp-1.0.0.war /var/lib/tomcat9/webapps/",
     ]
   }
