@@ -36,7 +36,7 @@ default = "sg-0e2711cc241cc7671"
 resource "aws_s3_bucket" "storage" {
   bucket = "s3_storage"
   tags = {
-    Name        = "s3 storage"
+    Name        = "s3_storage"
   }
 }
 
