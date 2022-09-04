@@ -41,7 +41,6 @@ resource "aws_s3_bucket" "storage" {
 }
 
 resource "aws_instance" "build"{
-       count = var.cnt
        key_name = var.kp
        ami = var.ami
        instance_type = var.itype
@@ -54,7 +53,6 @@ resource "aws_instance" "build"{
 }
 
 resource "aws_instance" "web"{
-       count = var.cnt
        key_name = var.kp
        ami = var.ami
        instance_type = var.itype
@@ -67,10 +65,10 @@ resource "aws_instance" "web"{
 }
 
 output "ip_builder"{
-value = aws_instance.build[count.index].public_ip
+value = aws_instance.build.public_ip
 }
 output "ip_web"{
-value = aws_instance.web[count.index].public_ip
+value = aws_instance.web.public_ip
 }
 output "id_s3"{
 value = aws_s3_bucket.storage.id
