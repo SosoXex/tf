@@ -66,12 +66,12 @@ resource "aws_instance" "web"{
        associate_public_ip_address = true
 }
 
-output "ip builder"{
+output "ip_builder"{
 value = aws_instance.build.public_ip
 }
-output "ip web"{
+output "ip_web"{
 value = aws_instance.web.public_ip
 }
-output "id s3"{
+output "id_s3"{
 value = aws_s3_bucket.storage.id
 }
