@@ -58,15 +58,6 @@ resource "aws_instance" "build"{
        key_name = aws_key_pair.generated_key.key_name
        ami = var.ami
        instance_type = var.itype
-       user_data = <<EOF
-#!/bin/bash -xe
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y git default-jdk maven aws-cli
-git clone https://github.com/koddas/war-web-project.git
-mvn -f ./war-web-project package
-aws s3 ls >> 1.txt
-EOF
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
@@ -83,15 +74,6 @@ resource "aws_instance" "web"{
          Name = "web"
        }
        security_groups = [var.ivpc]
-  user_data                   = <<EOF
-#!/bin/bash -xe
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y nginx vim
-sudo cat > /var/www/html/hello.html <<EOD
-Hello world!
-EOD
-EOF
        subnet_id = var.snet
        associate_public_ip_address = true
 }
@@ -110,4 +92,8 @@ value = aws_instance.web.private_ip
 }
 output "id_s3"{
 value = aws_s3_bucket.hw14s3war-s3-war.id
+}
+output "private_key" {
+  value     = tls_private_key.example.private_key_pem
+  sensitive = true
 }
