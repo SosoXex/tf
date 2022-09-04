@@ -71,5 +71,5 @@ output "ip_web"{
 value = aws_instance.web.public_ip
 }
 output "id_s3"{
-value = aws_s3_bucket.storage.id
+value = aws_s3_bucket.storage-for-war-attribute.id
 }
