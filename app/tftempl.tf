@@ -100,6 +100,7 @@ resource "aws_instance" "web"{
 
   provisioner "remote-exec" {
     inline = [
+      "sudo apt update",
       "sudo apt update && sudo apt install -y tomcat9",
     ]
   }
