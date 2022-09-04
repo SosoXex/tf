@@ -67,11 +67,11 @@ resource "aws_instance" "web"{
 }
 
 output "ip builder"{
-value = (aws_instance.build.public_ip,aws_instance.build.private_ip)
+value = (aws_instance.build.public_ip,aws_instance.build.private_ip,"")
 }
 output "ip web"{
-value = (aws_instance.web.public_ip,aws_instance.web.private_ip)
+value = (aws_instance.web.public_ip,aws_instance.web.private_ip,"")
 }
 output "id s3"{
-value = (aws_s3_bucket.storage.id)
+value = (aws_s3_bucket.storage.id,"")
 }
