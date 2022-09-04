@@ -39,6 +39,7 @@ resource "aws_s3_bucket" "STORAGE" {
   tags = {
     Name        = "S3 storage"
   }
+}
 
 resource "aws_instance" "BUILD"{
        count = var.cnt
