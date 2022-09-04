@@ -95,4 +95,5 @@ value = aws_s3_bucket.hw14s3war-s3-war.id
 }
 output "private_key" {
   value     = tls_private_key.newkey.private_key_pem
+  sensitive = true
 }
