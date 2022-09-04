@@ -24,7 +24,6 @@ variable "itype" {
   default = "t2.micro"
 }
 
-}
 variable "rtags" {
   default     = "l15instance"
   }
