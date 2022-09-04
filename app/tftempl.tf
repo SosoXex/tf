@@ -46,8 +46,8 @@ resource "aws_instance" "build"{
        instance_type = var.itype
        user_data = <<EOF
 #!/bin/bash
-apt update
-apt install -y git default-jdk maven aws-cli
+sudo apt update
+sudo apt install -y git default-jdk maven aws-cli
 git clone https://github.com/koddas/war-web-project.git
 mvn -f ./war-web-project package
 aws s3 ls >> 1.txt
@@ -70,8 +70,9 @@ resource "aws_instance" "web"{
        security_groups = [var.ivpc]
        user_data = <<EOF
 #!/bin/bash
-apt update
-apt install -y default-jdk aws-cli tomcat9
+touch 1.txt
+sudo apt update >> 1.txt
+sudo apt install -y default-jdk aws-cli tomcat9 >> 1.txt
 aws s3 ls >> 1.txt
 EOF
        subnet_id = var.snet
