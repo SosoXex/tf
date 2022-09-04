@@ -71,12 +71,21 @@ resource "aws_instance" "build"{
     host     = self.private_ip
   }
 
+    provisioner "file" {
+    source      = "./.passwd-s3fs"
+    destination = "/home/ubuntu/"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
-      "sudo apt update && sudo apt install -y git default-jdk maven awscli",
+      "sudo apt update && sudo apt install -y git default-jdk maven awscli s3fs",
       "git clone https://github.com/koddas/war-web-project.git",
       "mvn -f ./war-web-project package",
+      "chmod 600 .passwd-s3fs",
+      "mkdir -p s3",
+      "s3fs hw14s3war-s3-war ~/s3"
+      "sudo cp war-web-project/target/wwp-1.0.0.war ./s3/",
     ]
   }
 }
@@ -99,10 +108,19 @@ resource "aws_instance" "web"{
     host     = self.private_ip
   }
 
+      provisioner "file" {
+    source      = "./.passwd-s3fs"
+    destination = "/home/ubuntu/"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
-      "sudo apt update && sudo apt install -y tomcat9 awscli",
+      "sudo apt update && sudo apt install -y tomcat9 awscli s3fs",
+      "chmod 600 .passwd-s3fs",
+      "mkdir -p s3",
+      "s3fs hw14s3war-s3-war ~/s3"
+      "sudo cp s3/wwp-1.0.0.war /var/lib/tomcat9/webapps/",
     ]
   }
 }
