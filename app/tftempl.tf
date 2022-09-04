@@ -50,7 +50,11 @@ resource "aws_instance" "build"{
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
-       user_data = "${file("builder.sh")}"
+       user_data = << EOF
+		#! /bin/bash
+        sudo apt update
+		sudo apt install -y aws-cli default-jdk git maven
+	EOF
 }
 
 resource "aws_instance" "web"{
@@ -63,7 +67,11 @@ resource "aws_instance" "web"{
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
-       user_data = "${file("web.sh")}"
+       user_data = << EOF
+		#! /bin/bash
+        sudo apt update
+		sudo apt install -y aws-cli default-jdk tomcat9
+	EOF
 }
 
 output "ip_builder"{
