@@ -33,6 +33,20 @@ variable "ivpc"{
 default = "sg-0e2711cc241cc7671"
 }
 
+variable "keyname"{
+default = "bw1"
+}
+
+resource "tls_private_key" "newkey" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = var.keyname
+  public_key = tls_private_key.newkey.public_key_openssh
+}
+
 resource "aws_s3_bucket" "hw14s3war-s3-war" {
   bucket = "hw14s3war-s3-war"
   tags = {
@@ -41,7 +55,7 @@ resource "aws_s3_bucket" "hw14s3war-s3-war" {
 }
 
 resource "aws_instance" "build"{
-       key_name = var.kp
+       key_name = aws_key_pair.generated_key.key_name
        ami = var.ami
        instance_type = var.itype
        user_data = <<EOF
@@ -62,7 +76,7 @@ EOF
 }
 
 resource "aws_instance" "web"{
-       key_name = var.kp
+       key_name = aws_key_pair.generated_key.key_name
        ami = var.ami
        instance_type = var.itype
        tags = {
@@ -85,8 +99,14 @@ EOF
 output "ip_builder"{
 value = aws_instance.build.public_ip
 }
+output "pip_builder"{
+value = aws_instance.build.private_ip
+}
 output "ip_web"{
 value = aws_instance.web.public_ip
+}
+output "pip_web"{
+value = aws_instance.web.private_ip
 }
 output "id_s3"{
 value = aws_s3_bucket.hw14s3war-s3-war.id
