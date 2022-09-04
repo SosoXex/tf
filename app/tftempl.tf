@@ -33,7 +33,7 @@ variable "ivpc"{
 default = "sg-0e2711cc241cc7671"
 }
 
-resource "aws_s3_bucket" "domainsdeals-s3" {
+resource "aws_s3_bucket" "domainsdeals-s3-war" {
   bucket = "s3-storage"
   tags = {
     Name        = "s3-storage"
@@ -71,5 +71,5 @@ output "ip_web"{
 value = aws_instance.web.public_ip
 }
 output "id_s3"{
-value = aws_s3_bucket.domainsdeals-s3.id
+value = aws_s3_bucket.domainsdeals-s3-war.id
 }
