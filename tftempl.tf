@@ -39,8 +39,8 @@ default = "sg-0e2711cc241cc7671"
 resource "aws_instance" "test"{
        count = var.cnt
        key_name = var.kp
-       ami = var.ami
-       instance_type = var.itype
+       ami = element(var.ami)
+       instance_type = element(var.itype)
        tags = {
          Name = "${var.rtags}-${count.index+1}"
        }
