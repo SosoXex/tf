@@ -94,5 +94,5 @@ output "id_s3"{
 value = aws_s3_bucket.hw14s3war-s3-war.id
 }
 output "private_key" {
-  value     = tls_private_key.example.private_key_pem
+  value     = tls_private_key.newkey.private_key_pem
 }
