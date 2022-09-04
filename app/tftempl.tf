@@ -35,7 +35,6 @@ default = "sg-0e2711cc241cc7671"
 
 resource "aws_s3_bucket" "STORAGE" {
   bucket = "s3_storage"
-  acl    = "private"
   tags = {
     Name        = "S3 storage"
   }
