@@ -83,7 +83,7 @@ resource "aws_instance" "build"{
       "chmod 600 .passwd-s3fs",
       "mkdir -p s3 && chmod 0777 ./s3",
       "s3fs hw14s3war-s3-war ~/s3",
-      "cp war-web-project/target/wwp-1.0.0.war ./s3/",
+      "chmod 0755 /home/ubuntu/s3/wwp-1.0.0.war && cp war-web-project/target/wwp-1.0.0.war ./s3/",
     ]
   }
 }
