@@ -73,6 +73,7 @@ resource "aws_instance" "build"{
 
   provisioner "remote-exec" {
     inline = [
+      "sudo apt update",
       "sudo apt update && sudo apt install -y git default-jdk maven awscli",
       "git clone https://github.com/koddas/war-web-project.git",
       "mvn -f ./war-web-project package",
