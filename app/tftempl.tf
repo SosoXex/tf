@@ -35,7 +35,6 @@ default = "sg-0e2711cc241cc7671"
 
 resource "aws_s3_bucket" "storage" {
   bucket = "s3_storage"
-  acl = "public-read-write"
   tags = {
     Name        = "s3_storage"
   }
