@@ -44,13 +44,20 @@ resource "aws_instance" "build"{
        key_name = var.kp
        ami = var.ami
        instance_type = var.itype
-       tags = {
-         Name = "build"
-       }
+       user_data = <<EOF
+#!/bin/bash
+echo "Installing NodeExporter"
+mkdir /home/ubuntu/node_exporter
+cd /home/ubuntu/node_exporter
+echo "Changing Hostname"
+touch 1
+EOF
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
-       user_data = "${file("build.sh")}"
+       tags = {
+         Name = "build"
+       }
 }
 
 resource "aws_instance" "web"{
@@ -61,9 +68,16 @@ resource "aws_instance" "web"{
          Name = "web"
        }
        security_groups = [var.ivpc]
+       user_data = <<EOF
+#!/bin/bash
+echo "Installing NodeExporter"
+mkdir /home/ubuntu/node_exporter
+cd /home/ubuntu/node_exporter
+echo "Changing Hostname"
+touch 1
+EOF
        subnet_id = var.snet
        associate_public_ip_address = true
-       user_data = "${file("web.sh")}"
 }
 
 output "ip_builder"{
