@@ -16,9 +16,11 @@ variable "snet"{
   default = "subnet-081298183b5a18fe4"
 }
 variable "ami" {
+  type = list(string)
   default = "ami-0c9354388bb36c088"
 }
 variable "itype" {
+  type = list(string)
   default = "t2.micro"
 }
 
