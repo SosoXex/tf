@@ -17,11 +17,11 @@ variable "snet"{
 }
 variable "ami" {
   type = list(string)
-  default = "ami-0c9354388bb36c088"
+  default = ("ami-0c9354388bb36c088")
 }
 variable "itype" {
   type = list(string)
-  default = "t2.micro"
+  default = ("t2.micro")
 }
 
 variable "rtags" {
