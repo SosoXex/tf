@@ -78,12 +78,12 @@ resource "aws_instance" "build"{
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update && sudo apt update && sudo apt install -y git default-jdk maven awscli s3fs",
+      "sudo apt update && sudo apt update && sudo apt install -y git default-jdk maven s3fs",
       "git clone https://github.com/koddas/war-web-project.git && mvn -f ./war-web-project package",
       "chmod 600 .passwd-s3fs",
-      "mkdir -p s3",
+      "mkdir -p s3 && chmod 0777 ./s3",
       "s3fs hw14s3war-s3-war ~/s3",
-      "sudo cp war-web-project/target/wwp-1.0.0.war ./s3/",
+      "cp war-web-project/target/wwp-1.0.0.war ./s3/",
     ]
   }
 }
@@ -98,6 +98,7 @@ resource "aws_instance" "web"{
        security_groups = [var.ivpc]
        subnet_id = var.snet
        associate_public_ip_address = true
+       depends_on = [aws_instance.build]
 
        connection {
     type     = "ssh"
@@ -114,12 +115,13 @@ resource "aws_instance" "web"{
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
-      "sudo apt update && sudo apt install -y tomcat9 awscli s3fs",
+      "sudo apt update && sudo apt install -y tomcat9 awscli",
       "sudo apt update && sudo apt install -y s3fs",
       "chmod 600 .passwd-s3fs",
       "mkdir -p s3",
+      "chmod 0777 ./s3",
       "s3fs hw14s3war-s3-war ~/s3",
-      "sudo cp s3/wwp-1.0.0.war /var/lib/tomcat9/webapps/",
+      "cp ./s3/wwp-1.0.0.war /var/lib/tomcat9/webapps/",
     ]
   }
 }
