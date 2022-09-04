@@ -73,7 +73,6 @@ resource "aws_instance" "web"{
 #!/bin/bash -xe
 sudo apt update
 sudo apt upgrade -y
-sudo hostnamectl set-hostname ubuntusrv.citizix.com
 sudo apt install -y nginx vim
 sudo cat > /var/www/html/hello.html <<EOD
 Hello world!
